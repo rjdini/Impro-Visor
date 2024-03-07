@@ -1,5 +1,7 @@
 *.class
-#.ant/
+*.jar
+*.zip
+.ant/lib/*.jar
 .git/
 lib/
 build/
