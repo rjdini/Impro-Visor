@@ -12,11 +12,21 @@ and open the template in the editor.
             <conf name="build" description="build configuration"/>
         </configurations>
         <dependencies>
-		<!--dependency org="org.slf4j" name="slf4j-simple" rev="1.7.21"/>-->
-                <dependency org="net.mikera" name="vectorz" rev="0.48.0"/>
-                <dependency org="org.apache.commons" name="commons-configuration2" rev="2.0">
-                    <artifact name="commons-configuration2" type="jar" />
-                </dependency>
+            <!-- https://mavenlibs.com/maven/dependency/org.apache.ivy/ivy -->
+            <dependency org="org.apache.ivy" name="ivy" rev="2.5.2"/>
+            <!-- https://mavenlibs.com/maven/dependency/org.apache.commons/commons-configuration2 -->
+            <dependency org="org.apache.commons" name="commons-configuration2" rev="2.9.0"/>
+            <!-- https://mavenlibs.com/maven/dependency/us.bpsm/edn-java -->
+            <dependency org="us.bpsm" name="edn-java" rev="0.7.1"/>
+            <!-- https://mavenlibs.com/maven/dependency/net.sf.jack4j/jack4j -->
+            <dependency org="net.sf.jack4j" name="jack4j" rev="0.3.0"/>
+            <!-- https://mavenlibs.com/maven/dependency/net.mikera/mathz -->
+            <dependency org="net.mikera" name="mathz" rev="0.3.0"/>
+            <!-- https://mavenlibs.com/maven/dependency/net.mikera/mikera -->
+            <dependency org="net.mikera" name="mikera" rev="1.6.1"/>
+            <!-- https://mavenlibs.com/maven/dependency/org.apache.commons/commons-lang3 -->
+            <dependency org="org.apache.commons" name="commons-lang3" rev="3.13.0"/>
+
 		<!--dependency org="org.deeplearning4j" name="deeplearning4j-core" rev="0.4-rc3.9" conf="build->default"/>-->
                 <!--<dependency org="org.nd4j" name="nd4j-native" rev="0.4-rc3.9"/>-->
 		<!--<dependency org="org.jblas" name="jblas" rev="1.2.4" />-->

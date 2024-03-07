@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Impro-Visor" default="compile" basedir="."
-         xmlns:ivy="antlib:org.apache.ivy.ant"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
+         xmlns:ivy="antlib:org.apache.ivy.ant"
+         xsi:schemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd" >
 
 
->
     <!--   xmlns:ivy="antlib:org.apache.ivy.ant" ** rjd: intellij choaks on this uri,.
     It should be in the project field above.-->
 
     <path id="ivy.lib.path">
-        <fileset dir=".ant/lib" includes="*.jar"/>
+        <fileset dir="lib/" includes="*.jar"/>
     </path>
 
-    <taskdef resource="org/apache/ivy/ant/antlib.xml"
-             uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
 
     <description>
         Build-file for Impro-Visor version 10.2
@@ -89,12 +86,35 @@
             <pathelement path="${classpath}"/>
             <pathelement location="build"/>
             <pathelement location="src"/>
+            <!--
             <pathelement location="src/builtin.jar"/>
             <pathelement location="src/lang.jar"/>
+            -->
             <pathelement location="test"/>
-            <fileset dir="lib" includes="*.jar"/>
+            <fileset dir=".ant/lib" includes="*.jar"/>
         </path>
     </target>
+
+    <property name="ivy.install.version" value="2.5.2"/>
+    <property name="ivy.jar.dir" value="lib"/>
+    <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy-2.5.2.jar"/>
+
+
+    <target name="resolve" unless="skip.download">
+        <mkdir dir="${ivy.jar.dir}"/>
+        <echo message="installing ivy..."/>
+        <!-- https://mavenlibs.com/maven/dependency/org.apache.ivy/ivy -->
+        <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" dest="${ivy.jar.file}" usetimestamp="true"/>
+    </target>
+
+
+    <target name="resolve-rjd" description="rjd's pull dependencies">
+        <mkdir dir="${ivy.jar.dir}"/>
+        <echo message="pulling dependencies from maven repo..."/>
+        <ivy:resolve/>
+        <ivy:cachepath pathid="cp" conf="compile"/>
+    </target>
+
 
     <target name="buildInit" depends="init" description="initiate build">
         <mkdir dir="${buildDir}"/>
@@ -174,8 +194,14 @@
     </target>
     <!-- ivy end -->
 
-    <target name="imp" depends="buildInit,libInit,init,jm,resolve-deps" description="compile imp">
-        <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
+    <target name="imp" depends="buildInit,libInit,init,jm,resolve-deps"
+            description="compile imp">
+        <javac srcdir="${srcDir}"
+               destdir="${buildDir}"
+               fork="yes"
+               executable="/usr/bin/javac"
+               debug="true"
+               includeantruntime="false">
             <classpath refid="base.classpath"/>
             <include name="imp/**/*.java"/>
             <exclude name="**/package-info.java"/>

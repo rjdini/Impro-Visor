@@ -117,7 +117,7 @@
         <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/4">
             <compilation-unit>
                 <package-root>src</package-root>
-                <classpath mode="compile">out:build:src:src/builtin.jar:src/lang.jar:test</classpath>
+                <classpath mode="compile">out:build:src:test:.ant/lib/commons-configuration2-2.9.0.jar:.ant/lib/edn-java-0.7.1.jar:.ant/lib/ivy-2.5.2.jar:.ant/lib/jack4j-0.3.0.jar:.ant/lib/mathz-0.3.0.jar:.ant/lib/mikera-1.6.1.jar:.ant/lib/org-apache-commons-lang3-RELEASE130.jar</classpath>
                 <built-to>build</built-to>
                 <source-level>1.8</source-level>
             </compilation-unit>

@@ -1,0 +1,6 @@
+<ivysettings>
+    <settings defaultResolver="maven-repo"/>
+    <resolvers>
+        <ibiblio name="maven-repo" m2compatible="true" root="http://myrepo.mycompany.com/maven-central-proxy"/>
+    </resolvers>
+</ivysettings>

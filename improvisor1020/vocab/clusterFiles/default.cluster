@@ -1,0 +1,28 @@
+(windowSize 8)
+(maxMetricValues (18.0 0.6 1.0 1.0 510.0))
+(minMetricValues (0.0 0.0 0.0 0.0 0.0))
+ (cluster
+  (name cluster0)
+   (centroid
+    (noteCount 0.5992063492063492)
+    (syncopation 0.7147581254724111)
+    (diversityIndex 0.4107993229159287)
+    (numContourChanges 0.9285714285714286)
+    (longestNoteLength 0.3403361344537816)   )
+
+   (ruleStringList
+    (ruleString (rule (Seg8) ((slope 0 0 C2)(slope 0 0 C4 C8 C8 C4 C8 C8 C4 C4))STARTER ) (Xnotation (X 1 2)(X 1 4)(X 1 8)(X 1 8)(X 1 4)(X 1 8)(X 1 8)(X 1 4)(X 1 4)) (Brick-type null) Head 0 72 240 72 120 72 60 72 60 72 120 72 60 72 60 72 120 72 120  CHORDS C )
+    (ruleString (rule (Seg8) ((slope 0 0 C8)(slope 0 0 C4 C4 C4 C8 C4 C4 C8 C4 C8)) ) (Xnotation (X 1 8)(X 1 4)(X 1 4)(X 1 4)(X 1 8)(X 1 4)(X 1 4)(X 1 8)(X 1 4)(X 1 8)) (Brick-type null) Head 960 72 60 72 120 72 120 72 120 72 60 72 120 72 120 72 60 72 120 72 60  CHORDS C )
+    (ruleString (rule (Seg8) ((slope 0 0 C8)(slope 0 0 C8 C8 C8 C8 C8 C8 C8 C8 C8 C8 C8 C8 C8 C8 C8)) ) (Xnotation (X 1 8)(X 1 8)(X 1 8)(X 1 8)(X 1 8)(X 1 8)(X 1 8)(X 1 8)(X 1 8)(X 1 8)(X 1 8)(X 1 8)(X 1 8)(X 1 8)(X 1 8)(X 1 8)) (Brick-type null) Head 1920 72 60 72 60 72 60 72 60 72 60 72 60 72 60 72 60 72 60 72 60 72 60 72 60 72 60 72 60 72 60 72 60  CHORDS C )
+    (ruleString (rule (Seg8) ((slope 0 0 C4)(slope 0 0 C4 C4 C4 C4 C4 C4 C4)) ) (Xnotation (X 1 4)(X 1 4)(X 1 4)(X 1 4)(X 1 4)(X 1 4)(X 1 4)(X 1 4)) (Brick-type null) Head 2880 72 120 72 120 72 120 72 120 72 120 72 120 72 120 72 120  CHORDS C )
+    (ruleString (rule (Seg8) ((slope 0 0 C8+16)(slope 0 0 C16 C8+16 C16 C8+16 C16 C8+16 C16 C8+16 C16 C8+16 C16 C8+16 C16 C8+16 C16)) ) (Xnotation (X 1 8+16)(X 1 16)(X 1 8+16)(X 1 16)(X 1 8+16)(X 1 16)(X 1 8+16)(X 1 16)(X 1 8+16)(X 1 16)(X 1 8+16)(X 1 16)(X 1 8+16)(X 1 16)(X 1 8+16)(X 1 16)) (Brick-type null) Head 3840 72 90 72 30 72 90 72 30 72 90 72 30 72 90 72 30 72 90 72 30 72 90 72 30 72 90 72 30 72 90 72 30  CHORDS C )
+    (ruleString (rule (Seg8) ((slope 0 0 C2)(slope 0 0 C4/3 C4/3 C4/3 C2 C4/3 C4/3 C4/3)) ) (Xnotation (X 1 2)(X 1 4/3)(X 1 4/3)(X 1 4/3)(X 1 2)(X 1 4/3)(X 1 4/3)(X 1 4/3)) (Brick-type null) Head 4800 72 240 72 80 72 80 72 80 72 240 72 80 72 80 72 80  CHORDS C )
+    (ruleString (rule (Seg8) ((slope 0 0 C8)(slope 0 0 C4+8 C4+8 C8 C4+8 C4+8 C8 C8)) ) (Xnotation (X 1 8)(X 1 4+8)(X 1 4+8)(X 1 8)(X 1 4+8)(X 1 4+8)(X 1 8)(X 1 8)) (Brick-type null) Head 5760 72 60 72 180 72 180 72 60 72 180 72 180 72 60 72 60  CHORDS C )
+    (ruleString (rule (Seg8) ((slope 0 0 C4)(slope 0 0 C4+8 C8 C8 C8 C8+16 C16 C4 C4+8 C8)) ) (Xnotation (X 1 4)(X 1 4+8)(X 1 8)(X 1 8)(X 1 8)(X 1 8+16)(X 1 16)(X 1 4)(X 1 4+8)(X 1 8)) (Brick-type null) Head 6720 72 120 72 180 72 60 72 60 72 60 72 90 72 30 72 120 72 180 72 60  CHORDS C )
+    (ruleString (rule (Seg8) ((slope 0 0 C4+8)(slope 0 0 C8 C4 C4 C8 C4 C8 C4 C4)) ) (Xnotation (X 1 4+8)(X 1 8)(X 1 4)(X 1 4)(X 1 8)(X 1 4)(X 1 8)(X 1 4)(X 1 4)) (Brick-type null) Head 7680 72 180 72 60 72 120 72 120 72 60 72 120 72 60 72 120 72 120  CHORDS C )
+    (ruleString (rule (Seg8) ((slope 0 0 C4)(slope 0 0 C8 C8 C8 C4 C4 C8 C8 C8 C2)) ) (Xnotation (X 1 4)(X 1 8)(X 1 8)(X 1 8)(X 1 4)(X 1 4)(X 1 8)(X 1 8)(X 1 8)(X 1 2)) (Brick-type null) Head 8640 72 120 72 60 72 60 72 60 72 120 72 120 72 60 72 60 72 60 72 240  CHORDS C )
+    (ruleString (rule (Seg8) ((slope 0 0 C8)(slope 0 0 C8 C16 C8 C16 C8 C8 R4 C8 C8 C16 C8 C16 C8 C8 R4)) ) (Xnotation (X 1 8)(X 1 8)(X 1 16)(X 1 8)(X 1 16)(X 1 8)(X 1 8) R4 (X 1 8)(X 1 8)(X 1 16)(X 1 8)(X 1 16)(X 1 8)(X 1 8) R4 ) (Brick-type null) Head 9600 72 60 72 60 72 30 72 60 72 30 72 60 72 60 -1 120 72 60 72 60 72 30 72 60 72 30 72 60 72 60 -1 120  CHORDS C )
+    (ruleString (rule (Seg8) ((slope 0 0 C8+16)(slope 0 0 C16 C8 C8 C16 C8 C16 C8 C8 C8+16 C16 C8 C8 C16 C8 C16 C8 C8)) ) (Xnotation (X 1 8+16)(X 1 16)(X 1 8)(X 1 8)(X 1 16)(X 1 8)(X 1 16)(X 1 8)(X 1 8)(X 1 8+16)(X 1 16)(X 1 8)(X 1 8)(X 1 16)(X 1 8)(X 1 16)(X 1 8)(X 1 8)) (Brick-type null) Head 10560 72 90 72 30 72 60 72 60 72 30 72 60 72 30 72 60 72 60 72 90 72 30 72 60 72 60 72 30 72 60 72 30 72 60 72 60  CHORDS C )
+    (ruleString (rule (Seg8) ((slope 0 0 C8+16)(slope 0 0 C16 C4 C4 C8 C8 C4 C4 R2)) ) (Xnotation (X 1 8+16)(X 1 16)(X 1 4)(X 1 4)(X 1 8)(X 1 8)(X 1 4)(X 1 4) R2 ) (Brick-type null) Head 11520 72 90 72 30 72 120 72 120 72 60 72 60 72 120 72 120 -1 240  CHORDS C )
+    (ruleString (rule (Seg8) ((slope 0 0 R8+16 C16)(slope 0 0 C8+16 C16 C8+16 C16 C8+16 C1+16)) ) (Xnotation  R8+16 (X 1 16)(X 1 8+16)(X 1 16)(X 1 8+16)(X 1 16)(X 1 8+16)(X 1 1+16)) (Brick-type null) Head 12480 -1 90 72 30 72 90 72 30 72 90 72 30 72 90 72 510  CHORDS C )   )
+ ) 
