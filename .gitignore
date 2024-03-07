@@ -5,6 +5,7 @@
 .git/
 lib/
 build/
+out/
 .svn/
 nbproject/private/private.xml
 .DS_Store
