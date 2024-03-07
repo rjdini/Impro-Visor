@@ -1,5 +1,6 @@
 *.class
-.ant/
+#.ant/
+.git/
 lib/
 build/
 .svn/
