@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Impro-Visor:jar">
+    <output-path>$PROJECT_DIR$/build/artifacts/Impro_Visor_jar</output-path>
+    <root id="archive" name="Impro-Visor.jar">
+      <element id="module-output" name="Impro-Visor" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/.ant/lib/commons-configuration2-2.9.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/.ant/lib/ivy-2.5.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/.ant/lib/mathz-0.3.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/.ant/lib/mikera-1.6.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/.ant/lib/edn-java-0.7.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/.ant/lib/org-apache-commons-lang3-RELEASE130.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

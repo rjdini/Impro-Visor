@@ -1,663 +1,675 @@
-<project name="Impro-Visor" default="compile" basedir="." 
-         xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="Impro-Visor" default="compile" basedir="."
+>
+    <!--   xmlns:ivy="antlib:org.apache.ivy.ant" ** rjd: intellij choaks on this uri,.
+    It should be in the project field above.-->
 
-<description>
-Build-file for Impro-Visor version 10.2
-
-Copyright (C) 2005-2019 Robert Keller and Harvey Mudd College
-
-Impro-Visor is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-Impro-Visor is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-merchantability or fitness for a particular purpose.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Impro-Visor; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-</description>
-    
-<target name="init">
-    <property name="appName"                value="Impro-Visor"              />
-    <property name="distDir"                value="improvisor1020"            />
-    <property name="dist-mac"               value="improvisor1020-mac"        />
-    <property name="dist-win"               value="improvisor1020-win"        />
-    <property name="zipName"                value="improvisor1020.zip"        />
-    <property name="zipMacName"             value="improvisor1020mac.zip"     />
-    <property name="miscDir"                value="improvisor"               />
-    <property name="srcDir"                 value="src"                      />
-    <property name="impDir"                 value="src/imp"                  />
-    <property name="jmDir"                  value="src/jm"                   />
-    <property name="polyaDir"               value="src/polya"                />
-    <property name="mikeraDir"              value="src/mikera"               />
-    <property name="oscP5Dir"               value="src/oscP5"                />
-    <property name="netP5Dir"               value="src/netP5"                />
-    <property name="testDir"                value="test"                     />
-    <property name="buildDir"               value="build"                    />
-    <property name="libDir"                 value="lib"                      />
-    <property name="lsDir"                  value="leadsheets"               />
-    <property name="vocabDir"               value="vocab"                    />
-    <property name="grammarDir"             value="grammars"                 />
-    <property name="styleDir"               value="styles"                   />
-    <property name="styleExtractDir"        value="styleExtract"             />
-    <property name="midiDir"                value="midi"                     />
-    <property name="scDir"                  value="sc"                       />
-    <property name="countsDir"              value="counts"                   />
-    <property name="fractalsDir"            value="fractals"                 />
-    <property name="connectomesDir"         value="connectomes"              />
-    <property name="transformsDir"          value="transforms"               />
-    <property name="voicingsDir"            value="voicings"                 />
-    <property name="packagingDir"           value="packaging"                />
-    <property name="javadocDir"             value="javadoc"                  />
-
-    <property name="testClass"              value="NewScoreTest"             />
-    <property name="blankTestClass"         value="BlankScoreTest"           />
-    <property name="polyaTestClass"         value="PolyaTest"                />
-    <property name="leadsheetTestClass"     value="LeadsheetTest"            />
-    <property name="transpositionTestClass" value="TranspositionTest"        />
-    <property name="chordTestClass"         value="ChordTest"                />
-    <property name="scaleTestClass"         value="ScaleTest"                />
-    <property name="cellTestClass"          value="CellTest"                 />
-    <property name="intervalTestClass"      value="IntervalTest"             />
-    <property name="notePkgTestClass"       value="NotePkgTest"              />
-    <property name="errorLogTestClass"      value="ErrorLogTest"             />
-    <property name="advisorTestClass"       value="AdvisorTest"              />
-    <property name="improvisorClass"        value="imp.ImproVisor"           />
-    <property name="formatClass"            value="imp.util.FormatLeadsheet" />
-
-    <path id="base.classpath">
-        <pathelement path="${classpath}" />
-        <pathelement location="build" />
-        <pathelement location="src" />
-        <pathelement location="src/builtin.jar" />
-        <pathelement location="src/lang.jar" />
-        <pathelement location="test" />
-        <fileset dir="lib" includes="*.jar" />
+    <path id="ivy.lib.path">
+        <fileset dir=".ant/lib" includes="*.jar"/>
     </path>
-</target>
 
-<target name="buildInit" depends="init" description="initiate build">
-    <mkdir dir="${buildDir}" />
-</target>
+    <taskdef resource="org/apache/ivy/ant/antlib.xml"
+             uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
 
-<target name="distInit" depends="init" description="initiate dist">
-    <mkdir dir="${distDir}" />
-</target>
 
-<target name="javadocInit" depends="init" description="initiate javadoc">
-    <mkdir dir="${javadocDir}" />
-</target>
+    <description>
+        Build-file for Impro-Visor version 10.2
 
-<target name="libInit" depends="init" description="initiate libraries">
-    <mkdir dir="${libDir}" />
-</target>
+        Copyright (C) 2005-2019 Robert Keller and Harvey Mudd College
 
-<target name="javadoc" depends="javadocInit" description="create javadoc">
-    <javadoc destdir="${javadocDir}" access="private" use="true" 
-             linksource="yes">
-        <classpath refid="base.classpath" />
-        <fileset dir="${srcDir}">
-            <include name="**/*.java"/>
-        </fileset>
-        <link href="http://java.sun.com/j2se/1.5.0/docs/api/"/>
-    </javadoc>
-</target>
+        Impro-Visor is free software; you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation; either version 2 of the License, or
+        (at your option) any later version.
 
-<!-- ivy start -->
-    <property name="ivy.install.version" value="2.1.0-rc2" />
-    <condition property="ivy.home" value="${env.IVY_HOME}">
-      <isset property="env.IVY_HOME" />
-    </condition>
-    <property name="ivy.home" value="${basedir}/.ant" />
-    <property name="ivy.jar.dir" value="${ivy.home}/lib" />
-    <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
-    <property name="ivy.settings.dir" value="." />
+        Impro-Visor is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        merchantability or fitness for a particular purpose. See the
+        GNU General Public License for more details.
+
+        You should have received a copy of the GNU General Public License
+        along with Impro-Visor; if not, write to the Free Software
+        Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+    </description>
+
+    <property name="classpath" value="out"/>
+    <target name="init">
+        <property name="appName" value="Impro-Visor"/>
+        <property name="distDir" value="improvisor1020"/>
+        <property name="dist-mac" value="improvisor1020-mac"/>
+        <property name="dist-win" value="improvisor1020-win"/>
+        <property name="zipName" value="improvisor1020.zip"/>
+        <property name="zipMacName" value="improvisor1020mac.zip"/>
+        <property name="miscDir" value="improvisor"/>
+        <property name="srcDir" value="src"/>
+        <property name="impDir" value="src/imp"/>
+        <property name="jmDir" value="src/jm"/>
+        <property name="polyaDir" value="src/polya"/>
+        <property name="mikeraDir" value="src/mikera"/>
+        <property name="oscP5Dir" value="src/oscP5"/>
+        <property name="netP5Dir" value="src/netP5"/>
+        <property name="testDir" value="test"/>
+        <property name="buildDir" value="build"/>
+        <property name="libDir" value="lib"/>
+        <property name="lsDir" value="leadsheets"/>
+        <property name="vocabDir" value="vocab"/>
+        <property name="grammarDir" value="grammars"/>
+        <property name="styleDir" value="styles"/>
+        <property name="styleExtractDir" value="styleExtract"/>
+        <property name="midiDir" value="midi"/>
+        <property name="scDir" value="sc"/>
+        <property name="countsDir" value="counts"/>
+        <property name="fractalsDir" value="fractals"/>
+        <property name="connectomesDir" value="connectomes"/>
+        <property name="transformsDir" value="transforms"/>
+        <property name="voicingsDir" value="voicings"/>
+        <property name="packagingDir" value="packaging"/>
+        <property name="javadocDir" value="javadoc"/>
+
+        <property name="testClass" value="NewScoreTest"/>
+        <property name="blankTestClass" value="BlankScoreTest"/>
+        <property name="polyaTestClass" value="PolyaTest"/>
+        <property name="leadsheetTestClass" value="LeadsheetTest"/>
+        <property name="transpositionTestClass" value="TranspositionTest"/>
+        <property name="chordTestClass" value="ChordTest"/>
+        <property name="scaleTestClass" value="ScaleTest"/>
+        <property name="cellTestClass" value="CellTest"/>
+        <property name="intervalTestClass" value="IntervalTest"/>
+        <property name="notePkgTestClass" value="NotePkgTest"/>
+        <property name="errorLogTestClass" value="ErrorLogTest"/>
+        <property name="advisorTestClass" value="AdvisorTest"/>
+        <property name="improvisorClass" value="imp.ImproVisor"/>
+        <property name="formatClass" value="imp.util.FormatLeadsheet"/>
+
+        <path id="base.classpath">
+            <pathelement path="${classpath}"/>
+            <pathelement location="build"/>
+            <pathelement location="src"/>
+            <pathelement location="src/builtin.jar"/>
+            <pathelement location="src/lang.jar"/>
+            <pathelement location="test"/>
+            <fileset dir="lib" includes="*.jar"/>
+        </path>
+    </target>
+
+    <target name="buildInit" depends="init" description="initiate build">
+        <mkdir dir="${buildDir}"/>
+    </target>
+
+    <target name="distInit" depends="init" description="initiate dist">
+        <mkdir dir="${distDir}"/>
+    </target>
+
+    <target name="javadocInit" depends="init" description="initiate javadoc">
+        <mkdir dir="${javadocDir}"/>
+    </target>
+
+    <target name="libInit" depends="init" description="initiate libraries">
+        <mkdir dir="${libDir}"/>
+    </target>
+
+    <target name="javadoc" depends="javadocInit" description="create javadoc">
+        <javadoc destdir="${javadocDir}" access="private" use="true"
+                 linksource="yes">
+            <classpath refid="base.classpath"/>
+            <fileset dir="${srcDir}">
+                <include name="**/*.java"/>
+            </fileset>
+            <link href="http://java.sun.com/j2se/1.5.0/docs/api/"/>
+        </javadoc>
+    </target>
+
+    <!-- ivy start -->
+    <property name="ivy.install.version" value="2.5.2"/>
+
+    <property name="ivy.home" value="${basedir}/.ant"/>
+    <property name="ivy.jar.dir" value="${ivy.home}/lib"/>
+    <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy-2.5.2.jar"/>
+    <property name="ivy.settings.dir" value="."/>
     <property name="apache.ant.ext.lib" value="{ivy.home}"/>
-    
-    <path id="ivy.classpath" path="${ivy.jar.file}" />
-    
-    <target name="download-ivy" unless="offline" >
-        <echo level="info"> Downloading Ivy</echo>
+
+    <path id="ivy.classpath" path="${ivy.jar.file}"/>
+
+    <target name="download-ivy" unless="offline">
+        <echo level="info">Downloading Ivy</echo>
         <mkdir dir="${ivy.jar.dir}"/>
         <!-- download Ivy from web site so that it can be used even without any special installation -->
-        <get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" 
+        <get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar"
              dest="${ivy.jar.file}" usetimestamp="true"/>
     </target>
     <target name="check-for-ivy">
         <available property="have.ivy" resource="org/apache/ivy/ant/antlib.xml" classpathref="ivy.classpath"/>
     </target>
     <target name="download-ivy-if-needed" depends="check-for-ivy" unless="have.ivy">
-        <antcall target="download-ivy" />
+        <antcall target="download-ivy"/>
     </target>
 
     <target name="init-ivy" depends="libInit">
-        <antcall target="download-ivy-if-needed" />
-      <!-- try to load ivy here from ivy home, in case the user has not already dropped
+        <antcall target="download-ivy-if-needed"/>
+        <!-- try to load ivy here from ivy home, in case the user has not already dropped
               it into ant's lib dir (note that the latter copy will always take precedence).
               We will not fail as long as local lib dir exists (it may be empty) and
               ivy is in at least one of ant's lib dir or the local lib dir. -->
         <taskdef resource="org/apache/ivy/ant/antlib.xml"
                  uri="antlib:org.apache.ivy.ant" classpathref="ivy.classpath"/>
     </target>
-    
+
     <!-- ivy to get dependencies and copy to project lib folder automatically -->
     <target name="resolve-deps" depends="init,init-ivy" description="retrieve dependencies with ivy">
-        <ivy:retrieve log="quiet"/>
+     <!--   <ivy:retrieve log="quiet"/> -->
         <pathconvert property="lib-jars-str" refid="base.classpath">
             <mapper>
-                <globmapper from="${basedir}/*" to="*" handledirsep="true" />
+                <globmapper from="${basedir}/*" to="*" handledirsep="true"/>
             </mapper>
         </pathconvert>
-        <echo level="info"> Automatically setting NetBeans sources to match classpath: ${lib-jars-str}</echo>
+        <echo level="info">Automatically setting NetBeans sources to match classpath: ${lib-jars-str}</echo>
         <replaceregexp
-            file="nbproject/project.xml"
-            match="(\x3cclasspath mode=\x22compile\x22\x3e)[^>]*(\x3c/classpath\x3e)"
-            replace="\1${lib-jars-str}\2" />
+                file="nbproject/project.xml"
+                match="(\x3cclasspath mode=\x22compile\x22\x3e)[^>]*(\x3c/classpath\x3e)"
+                replace="\1${lib-jars-str}\2"/>
     </target>
-<!-- ivy end -->
+    <!-- ivy end -->
 
-<target name="imp" depends="buildInit,libInit,init,jm,resolve-deps" description="compile imp">
-    <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
-         <classpath refid="base.classpath" />
-         <include name="imp/**/*.java"/>
-         <exclude name="**/package-info.java"/>
-     </javac>
-</target>
+    <target name="imp" depends="buildInit,libInit,init,jm,resolve-deps" description="compile imp">
+        <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
+            <classpath refid="base.classpath"/>
+            <include name="imp/**/*.java"/>
+            <exclude name="**/package-info.java"/>
+        </javac>
+    </target>
 
-<target name="jm" depends="buildInit,libInit,init" description="compile jm">
-     <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
-         <classpath refid="base.classpath" />
-         <include name="jm/**/*.java"/>
-         <exclude name="**/package-info.java"/>
-     </javac>
-</target>
+    <target name="jm" depends="buildInit,libInit,init" description="compile jm">
+        <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
+            <classpath refid="base.classpath"/>
+            <include name="jm/**/*.java"/>
+            <exclude name="**/package-info.java"/>
+        </javac>
+    </target>
 
-<target name="polya" depends="buildInit,libInit,init" description="compile polya">
-    <javac srcdir="${srcDir}" destdir = "${buildDir}" debug="true" includeantruntime="false">
-        <classpath refid="base.classpath" />
-        <include name="polya/**/*.java"/>
-        <exclude name="**/package-info.java"/>
-    </javac>
-</target>
+    <target name="polya" depends="buildInit,libInit,init" description="compile polya">
+        <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
+            <classpath refid="base.classpath"/>
+            <include name="polya/**/*.java"/>
+            <exclude name="**/package-info.java"/>
+        </javac>
+    </target>
 
-<target name="mikera" depends="buildInit,libInit,init" description="compile mikera">
-    <javac srcdir="${srcDir}" destdir = "${buildDir}" debug="true" includeantruntime="false">
-        <classpath refid="base.classpath" />
-        <include name="mikera/**/*.java"/>
-        <exclude name="**/package-info.java"/>
-    </javac>
-</target>
+    <target name="mikera" depends="buildInit,libInit,init" description="compile mikera">
+        <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
+            <classpath refid="base.classpath"/>
+            <include name="mikera/**/*.java"/>
+            <exclude name="**/package-info.java"/>
+        </javac>
+    </target>
 
-<target name="oscP5" depends="buildInit,libInit,init" description="compile oscP5">
-    <javac srcdir="${srcDir}" destdir = "${buildDir}" debug="true" includeantruntime="false">
-        <classpath refid="base.classpath" />
-        <include name="oscP5/**/*.java"/>
-        <exclude name="**/package-info.java"/>
-    </javac>
-</target>
+    <target name="oscP5" depends="buildInit,libInit,init" description="compile oscP5">
+        <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
+            <classpath refid="base.classpath"/>
+            <include name="oscP5/**/*.java"/>
+            <exclude name="**/package-info.java"/>
+        </javac>
+    </target>
 
-<target name="netP5" depends="buildInit,libInit,init" description="compile netP5">
-    <javac srcdir="${srcDir}" destdir = "${buildDir}" debug="true" includeantruntime="false">
-        <classpath refid="base.classpath" />
-        <include name="netP5/**/*.java"/>
-        <exclude name="**/package-info.java"/>
-    </javac>
-</target>
+    <target name="netP5" depends="buildInit,libInit,init" description="compile netP5">
+        <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
+            <classpath refid="base.classpath"/>
+            <include name="netP5/**/*.java"/>
+            <exclude name="**/package-info.java"/>
+        </javac>
+    </target>
 
-<target name="buildImp" depends="buildInit,libInit,imp" description="compile imp in build">
-    <copy todir="${buildDir}">
-        <fileset dir="${srcDir}">
-            <include name="imp/**/*.class" />
-            <include name="imp/**/*.gif" />
-            <include name="imp/**/*.png" />
-            <include name="imp/**/*.JPG" />
-            <include name="imp/**/*.jpg" />
-            <exclude name="**/package-info.java" />
-        </fileset>
-    </copy>
-</target>
+    <target name="buildImp" depends="buildInit,libInit,imp" description="compile imp in build">
+        <copy todir="${buildDir}">
+            <fileset dir="${srcDir}">
+                <include name="imp/**/*.class"/>
+                <include name="imp/**/*.gif"/>
+                <include name="imp/**/*.png"/>
+                <include name="imp/**/*.JPG"/>
+                <include name="imp/**/*.jpg"/>
+                <exclude name="**/package-info.java"/>
+            </fileset>
+        </copy>
+    </target>
 
-<target name="buildJm" depends="buildInit,libInit,jm" description="compile jm in build">
-    <copy todir="${buildDir}">
-        <fileset dir="${srcDir}">
-            <include name="jm/**/*.class" />
-            <exclude name="**/package-info.java" />
-        </fileset>
-    </copy>
-</target>
+    <target name="buildJm" depends="buildInit,libInit,jm" description="compile jm in build">
+        <copy todir="${buildDir}">
+            <fileset dir="${srcDir}">
+                <include name="jm/**/*.class"/>
+                <exclude name="**/package-info.java"/>
+            </fileset>
+        </copy>
+    </target>
 
-<target name="buildPolya" depends="buildInit,libInit,polya" description="compile polya in build">
-    <copy todir="${buildDir}">
-        <fileset dir="${srcDir}">
-            <include name="polya/**/*.class" />
-            <exclude name="**/package-info.java" />
-        </fileset>
-    </copy>
-</target>
+    <target name="buildPolya" depends="buildInit,libInit,polya" description="compile polya in build">
+        <copy todir="${buildDir}">
+            <fileset dir="${srcDir}">
+                <include name="polya/**/*.class"/>
+                <exclude name="**/package-info.java"/>
+            </fileset>
+        </copy>
+    </target>
 
-<target name="buildMikera" depends="buildInit,libInit,mikera" description="compile mikera in build">
-    <copy todir="${buildDir}">
-        <fileset dir="${srcDir}">
-            <include name="mikera/**/*.class" />
-            <exclude name="**/package-info.java" />
-        </fileset>
-    </copy>
-</target>
+    <target name="buildMikera" depends="buildInit,libInit,mikera" description="compile mikera in build">
+        <copy todir="${buildDir}">
+            <fileset dir="${srcDir}">
+                <include name="mikera/**/*.class"/>
+                <exclude name="**/package-info.java"/>
+            </fileset>
+        </copy>
+    </target>
 
-<target name="buildOscP5" depends="buildInit,libInit,oscP5" description="compile oscP5 in build">
-    <copy todir="${buildDir}">
-        <fileset dir="${srcDir}">
-            <include name="oscP5/**/*.class" />
-            <exclude name="**/package-info.java" />
-        </fileset>
-    </copy>
-</target>
+    <target name="buildOscP5" depends="buildInit,libInit,oscP5" description="compile oscP5 in build">
+        <copy todir="${buildDir}">
+            <fileset dir="${srcDir}">
+                <include name="oscP5/**/*.class"/>
+                <exclude name="**/package-info.java"/>
+            </fileset>
+        </copy>
+    </target>
 
-<target name="buildNetP5" depends="buildInit,libInit,netP5" description="compile netP5 in build">
-    <copy todir="${buildDir}">
-        <fileset dir="${srcDir}">
-            <include name="netP5/**/*.class" />
-            <exclude name="**/package-info.java" />
-        </fileset>
-    </copy>
-</target>
+    <target name="buildNetP5" depends="buildInit,libInit,netP5" description="compile netP5 in build">
+        <copy todir="${buildDir}">
+            <fileset dir="${srcDir}">
+                <include name="netP5/**/*.class"/>
+                <exclude name="**/package-info.java"/>
+            </fileset>
+        </copy>
+    </target>
 
-<target name="compile" depends="polya,imp,jm,mikera,oscP5,netP5" description="compile the source">
-</target>
+    <target name="compile" depends="polya,imp,jm,mikera,oscP5,netP5" description="compile the source">
+    </target>
 
-<target name="build" depends="buildPolya,buildImp,buildJm,buildMikera,buildOscP5,buildNetP5" description="build the source in build">
-</target>
+    <target name="build" depends="buildPolya,buildImp,buildJm,buildMikera,buildOscP5,buildNetP5"
+            description="build the source in build">
+    </target>
 
-<target name="dist" depends="distInit,build" description="make a distribution">
-    <jar jarfile="${distDir}/improvisor.jar" basedir="${buildDir}" 
-         update="no">
-         <manifest>
-             <attribute name="Main-Class" value="imp.ImproVisor" />
-         </manifest>
-    </jar>
-    
-    <copy todir="${distDir}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*" />
-    </copy>
-    
-    <copy todir="${distDir}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.voc" />
-    </copy>
-    <copy todir="${distDir}">
-        <fileset dir="" includes="LICENSE.txt README.txt" />
-    </copy>
-    <copy todir="${distDir}/grammars">
-        <fileset dir="${grammarDir}" includes="**/*.grammar **/*.transform **/*.soloist **/HeadData.data" />
-    </copy>
-    <copy todir="${distDir}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.prefs" />
-    </copy>
-    <copy todir="${distDir}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.cluster" />
-    </copy>
-    <copy todir="${distDir}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.rhythms" />
-    </copy>
-    <copy todir="${distDir}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.xml" />
-    </copy>
-    <copy todir="${distDir}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.dictionary" />
-    </copy>
-    <copy todir="${distDir}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.substitutions" />
-    </copy>
-    <copy todir="${distDir}/styles">
-        <fileset dir="${styleDir}" includes="**/*.sty" />
-    </copy>
-    <copy todir="${distDir}/styleExtract">
-        <fileset dir="${styleExtractDir}" includes="**/*.mid **/*.MID **/*.ls" />
-    </copy>
-    <copy todir="${distDir}/midi">
-        <fileset dir="${midiDir}" includes="**/*.mid **/*.MID" />
-    </copy>
-    <copy todir="${distDir}/leadsheets">
-        <fileset dir="${lsDir}" includes="**/*.ls" />
-    </copy>
-    <copy todir="${distDir}/sc">
-        <fileset dir="${scDir}" includes="**/*.*" />
-    </copy>
-    <copy todir="${distDir}/counts">
-        <fileset dir="${countsDir}" includes="**/*.counts" />
-    </copy>
-    <copy todir="${distDir}/fractals">
-        <fileset dir="${fractalsDir}" includes="**/*.fractal" />
-    </copy>
-    <copy todir="${distDir}/connectomes">
-        <fileset dir="${connectomesDir}" includes="**/*.ctome" />
-    </copy>
-    <copy todir="${distDir}/transforms">
-        <fileset dir="${transformsDir}" includes="**/*.transform" />
-    </copy>
-    <copy todir="${distDir}/voicings">
-        <fileset dir="${voicingsDir}" includes="**/*.fv" />
-    </copy>
-    <copy todir="${distDir}">
-        <fileset dir="${miscDir}" includes="**/*.*" />
-    </copy>
-</target>
+    <target name="dist" depends="distInit,build" description="make a distribution">
+        <jar jarfile="${distDir}/improvisor.jar" basedir="${buildDir}"
+             update="no">
+            <manifest>
+                <attribute name="Main-Class" value="imp.ImproVisor"/>
+            </manifest>
+        </jar>
 
-<target name="test" depends="compile" description="compile the test">
-    <javac srcdir="${testDir}">
-        <classpath refid="base.classpath" />
-    </javac>
-</target>
+        <copy todir="${distDir}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*"/>
+        </copy>
+
+        <copy todir="${distDir}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.voc"/>
+        </copy>
+        <copy todir="${distDir}">
+            <fileset dir="" includes="LICENSE.txt README.txt"/>
+        </copy>
+        <copy todir="${distDir}/grammars">
+            <fileset dir="${grammarDir}" includes="**/*.grammar **/*.transform **/*.soloist **/HeadData.data"/>
+        </copy>
+        <copy todir="${distDir}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.prefs"/>
+        </copy>
+        <copy todir="${distDir}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.cluster"/>
+        </copy>
+        <copy todir="${distDir}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.rhythms"/>
+        </copy>
+        <copy todir="${distDir}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.xml"/>
+        </copy>
+        <copy todir="${distDir}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.dictionary"/>
+        </copy>
+        <copy todir="${distDir}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.substitutions"/>
+        </copy>
+        <copy todir="${distDir}/styles">
+            <fileset dir="${styleDir}" includes="**/*.sty"/>
+        </copy>
+        <copy todir="${distDir}/styleExtract">
+            <fileset dir="${styleExtractDir}" includes="**/*.mid **/*.MID **/*.ls"/>
+        </copy>
+        <copy todir="${distDir}/midi">
+            <fileset dir="${midiDir}" includes="**/*.mid **/*.MID"/>
+        </copy>
+        <copy todir="${distDir}/leadsheets">
+            <fileset dir="${lsDir}" includes="**/*.ls"/>
+        </copy>
+        <copy todir="${distDir}/sc">
+            <fileset dir="${scDir}" includes="**/*.*"/>
+        </copy>
+        <copy todir="${distDir}/counts">
+            <fileset dir="${countsDir}" includes="**/*.counts"/>
+        </copy>
+        <copy todir="${distDir}/fractals">
+            <fileset dir="${fractalsDir}" includes="**/*.fractal"/>
+        </copy>
+        <copy todir="${distDir}/connectomes">
+            <fileset dir="${connectomesDir}" includes="**/*.ctome"/>
+        </copy>
+        <copy todir="${distDir}/transforms">
+            <fileset dir="${transformsDir}" includes="**/*.transform"/>
+        </copy>
+        <copy todir="${distDir}/voicings">
+            <fileset dir="${voicingsDir}" includes="**/*.fv"/>
+        </copy>
+        <copy todir="${distDir}">
+            <fileset dir="${miscDir}" includes="**/*.*"/>
+        </copy>
+    </target>
+
+    <target name="test" depends="compile" description="compile the test">
+        <javac srcdir="${testDir}">
+            <classpath refid="base.classpath"/>
+        </javac>
+    </target>
 
 
-<target name="improvisor" depends="compile" description="impro-visor program">
-   <java classname="${improvisorClass}" fork="true">
-       <classpath refid="base.classpath" />
-   </java>
-</target>
+    <target name="improvisor" depends="compile" description="impro-visor program">
+        <java classname="${improvisorClass}" fork="true">
+            <classpath refid="base.classpath"/>
+        </java>
+    </target>
 
-<target name="impro-visor" depends="compile" description="impro-visor program">
-   <java classname="${improvisorClass}" fork="true">
-        <classpath refid="base.classpath" />
-   </java>
-</target>
+    <target name="impro-visor" depends="compile" description="impro-visor program">
+        <java classname="${improvisorClass}" fork="true">
+            <classpath refid="base.classpath"/>
+        </java>
+    </target>
 
-<target name="format" depends="compile" description="reformats the leadsheets">
-   <java classname="${formatClass}" fork="true">
-        <classpath refid="base.classpath" />
-   </java>
-</target>
+    <target name="format" depends="compile" description="reformats the leadsheets">
+        <java classname="${formatClass}" fork="true">
+            <classpath refid="base.classpath"/>
+        </java>
+    </target>
 
-<target name="runtest" depends="test" description="run the test">
-    <java classname="${testClass}" fork="true">
-        <classpath refid="base.classpath" />
-    </java>
-</target>
+    <target name="runtest" depends="test" description="run the test">
+        <java classname="${testClass}" fork="true">
+            <classpath refid="base.classpath"/>
+        </java>
+    </target>
 
-<target name="blankscore" depends="test" description="run the blank score test">
-    <java classname="${blankTestClass}" input="${vocabDir}/Default.rul" fork="true">
-        <classpath refid="base.classpath" />
-    </java>
-</target>
+    <target name="blankscore" depends="test" description="run the blank score test">
+        <java classname="${blankTestClass}" input="${vocabDir}/Default.rul" fork="true">
+            <classpath refid="base.classpath"/>
+        </java>
+    </target>
 
-<target name="polyatest" depends="test" description="run the polya test">
-    <java classname="${polyaTestClass}" input = "${testDir}/PolyaTest.in" fork="true">
-        <classpath refid="base.classpath" />
-    </java>
-</target>
+    <target name="polyatest" depends="test" description="run the polya test">
+        <java classname="${polyaTestClass}" input="${testDir}/PolyaTest.in" fork="true">
+            <classpath refid="base.classpath"/>
+        </java>
+    </target>
 
-<target name="leadsheettest" depends="test" description="run the leadsheet test">
-    <java classname="${leadsheetTestClass}" input = "${testDir}/LeadsheetTest.ls" fork="true">
-        <classpath refid="base.classpath" />
-    </java>
-</target>
+    <target name="leadsheettest" depends="test" description="run the leadsheet test">
+        <java classname="${leadsheetTestClass}" input="${testDir}/LeadsheetTest.ls" fork="true">
+            <classpath refid="base.classpath"/>
+        </java>
+    </target>
 
-<target name="transpositiontest" depends="test" description="run the transposition test">
-    <java classname="${transpositionTestClass}" input = "${testDir}/GiantStepsBb.ls" fork="true">
-        <classpath refid="base.classpath" />
-    </java>
-</target>
+    <target name="transpositiontest" depends="test" description="run the transposition test">
+        <java classname="${transpositionTestClass}" input="${testDir}/GiantStepsBb.ls" fork="true">
+            <classpath refid="base.classpath"/>
+        </java>
+    </target>
 
-<target name="chordtest" depends="test" description="run the chord test">
-    <java classname="${chordTestClass}" input = "${testDir}/ChordTest.rul" fork="true">
-        <classpath refid="base.classpath" />
-    </java>
-</target>
+    <target name="chordtest" depends="test" description="run the chord test">
+        <java classname="${chordTestClass}" input="${testDir}/ChordTest.rul" fork="true">
+            <classpath refid="base.classpath"/>
+        </java>
+    </target>
 
-<target name="scaletest" depends="test" description="run the scale test">
-    <java classname="${scaleTestClass}" input = "${testDir}/ScaleTest.rul" fork="true">
-        <classpath refid="base.classpath" />
-    </java>
-</target>
+    <target name="scaletest" depends="test" description="run the scale test">
+        <java classname="${scaleTestClass}" input="${testDir}/ScaleTest.rul" fork="true">
+            <classpath refid="base.classpath"/>
+        </java>
+    </target>
 
-<target name="celltest" depends="test" description="run the cell test">
-    <java classname="${cellTestClass}" fork="true">
-        <classpath refid="base.classpath" />
-    </java>
-</target>
+    <target name="celltest" depends="test" description="run the cell test">
+        <java classname="${cellTestClass}" fork="true">
+            <classpath refid="base.classpath"/>
+        </java>
+    </target>
 
-<target name="intervaltest" depends="test" description="run the interval test">
-    <java classname="${intervalTestClass}" fork="true">
-        <classpath refid="base.classpath" />
-    </java>
-</target>
+    <target name="intervaltest" depends="test" description="run the interval test">
+        <java classname="${intervalTestClass}" fork="true">
+            <classpath refid="base.classpath"/>
+        </java>
+    </target>
 
-<target name="notepkgtest" depends="test" description="run the notepkg test">
-    <java classname="${notePkgTestClass}" fork="true">
-        <classpath refid="base.classpath" />
-    </java>
-</target>
+    <target name="notepkgtest" depends="test" description="run the notepkg test">
+        <java classname="${notePkgTestClass}" fork="true">
+            <classpath refid="base.classpath"/>
+        </java>
+    </target>
 
-<target name="errorlogtest" depends="test" description="run the error log test">
-    <java classname="${errorLogTestClass}" fork="true">
-        <classpath refid="base.classpath" />
-    </java>
-</target>
+    <target name="errorlogtest" depends="test" description="run the error log test">
+        <java classname="${errorLogTestClass}" fork="true">
+            <classpath refid="base.classpath"/>
+        </java>
+    </target>
 
-<target name="advisortest" depends="test" description="run the advisor test">
-    <java classname="${advisorTestClass}" input="${vocabDir}/Default.rul"
-                fork="true">
-          <classpath refid="base.classpath" />
-    </java>
-</target>
+    <target name="advisortest" depends="test" description="run the advisor test">
+        <java classname="${advisorTestClass}" input="${vocabDir}/Default.rul"
+              fork="true">
+            <classpath refid="base.classpath"/>
+        </java>
+    </target>
 
-<target name="zip" depends="dist" description="zips up the dist">
-    <zip destfile="${zipName}" basedir="${distDir}" />
-</target>
+    <target name="zip" depends="dist" description="zips up the dist">
+        <zip destfile="${zipName}" basedir="${distDir}"/>
+    </target>
 
-<target name="zipMac" depends="dist" description="zips up the mac version of the dist">
-    <zip destfile="${zipMacName}" basedir="${dist-mac}" />
-</target>
+    <target name="zipMac" depends="dist" description="zips up the mac version of the dist">
+        <zip destfile="${zipMacName}" basedir="${dist-mac}"/>
+    </target>
 
-<target name="zipSrc" depends="cleanSrc" description="zips up the source">
-    <zip destfile="improvisor1020-src.zip" basedir="${srcDir}" />
-</target>
+    <target name="zipSrc" depends="cleanSrc" description="zips up the source">
+        <zip destfile="improvisor1020-src.zip" basedir="${srcDir}"/>
+    </target>
 
-<target name="cleanJavadoc" depends="init" description="">
-    <delete dir="${javadocDir}"/>
-</target>
+    <target name="cleanJavadoc" depends="init" description="">
+        <delete dir="${javadocDir}"/>
+    </target>
 
-<target name="cleanSrc" depends="init" description="removes class files from src directory">
-    <delete>
-        <fileset dir="${srcDir}" includes="**/*.class" />
-    </delete>
-</target>
+    <target name="cleanSrc" depends="init" description="removes class files from src directory">
+        <delete>
+            <fileset dir="${srcDir}" includes="**/*.class"/>
+        </delete>
+    </target>
 
- <target name="cleanBuild" depends="buildInit,init" description="removes build directory contents">
-    <delete includeemptydirs="true">
-        <fileset dir="${buildDir}" includes="imp/** jm/** polya/**" />
-    </delete>
- </target>
+    <target name="cleanBuild" depends="buildInit,init" description="removes build directory contents">
+        <delete includeemptydirs="true">
+            <fileset dir="${buildDir}" includes="imp/** jm/** polya/**"/>
+        </delete>
+    </target>
 
-<target name="cleanTest" depends="init" description="removes class files from test directory">
-</target>
+    <target name="cleanTest" depends="init" description="removes class files from test directory">
+    </target>
 
-<target name="cleanDist" depends="init" description="removes dist directory">
-    <delete dir="${distDir}" />
-</target>
+    <target name="cleanDist" depends="init" description="removes dist directory">
+        <delete dir="${distDir}"/>
+    </target>
 
-<target name="cleanLib" depends="init" description="removes dist directory">
-    <delete dir="${libDir}" />
-</target>
+    <target name="cleanLib" depends="init" description="removes dist directory">
+        <delete dir="${libDir}"/>
+    </target>
 
-<target name="cleanZip" depends="init" description="removes zip file">
-   <delete file="${zipName}" />
-</target>
+    <target name="cleanZip" depends="init" description="removes zip file">
+        <delete file="${zipName}"/>
+    </target>
 
-<target name="cleanZipSrc" depends="init" description="removes zipSrc file">
-   <delete file="improvisor1020-src.zip" />
-</target>
+    <target name="cleanZipSrc" depends="init" description="removes zipSrc file">
+        <delete file="improvisor1020-src.zip"/>
+    </target>
 
-<target name="clean" depends="cleanBuild,cleanTest,cleanDist,cleanZip,cleanSrc,cleanZipSrc,cleanJavadoc,cleanLib" 
-        description="Deletes all class files, build, dist, lib, and zip files" />
-        
-<target name="dist-mac" depends="dist">
-    <property name="appdir"
-        value="${dist-mac}/${appName}.app" />
-    <mkdir dir="${appdir}" />
-    <mkdir dir="${appdir}/Contents" />
-    <mkdir dir="${appdir}/Contents/MacOS" />
-    <mkdir dir="${appdir}/Contents/Resources" />
-    <mkdir dir="${appdir}/Contents/Resources/Java" />
-    <mkdir dir="${dist-mac}/vocab" />
-    <mkdir dir="${dist-mac}/styles" />
-    <mkdir dir="${dist-mac}/styleExtract" />
-    <mkdir dir="${dist-mac}/midi" />
-    <mkdir dir="${dist-mac}/leadsheets" />
-    
-    <copy file="${packagingDir}/JavaApplicationStub"
-        todir="${appdir}/Contents/MacOS"/>
-    <exec executable="chmod">
-        <arg line="755 ${appdir}/Contents/MacOS/JavaApplicationStub"/>
-    </exec>
-    
-    <copy file="${packagingDir}/ImproVisor.icns"
-        todir="${appdir}/Contents/Resources" />
-    
-    <copy file="${packagingDir}/Info.plist"
-        todir="${dist-mac}/${appName}.app/Contents"/>
-        
-    <copy file="${packagingDir}/PkgInfo"
-        todir="${dist-mac}/${appName}.app/Contents"/>
-        
-    <copy file="${distDir}/improvisor.jar"
-        todir="${appdir}/Contents/Resources/Java"/>
-        
-    <copy todir="${dist-mac}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.voc HeadData.data" />
-    </copy>
-    
-    <copy todir="${dist-mac}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*" />
-    </copy>
-    
-    <copy todir="${dist-mac}">
-        <fileset dir="" includes="LICENSE.txt README.txt" />
-    </copy>
+    <target name="clean" depends="cleanBuild,cleanTest,cleanDist,cleanZip,cleanSrc,cleanZipSrc,cleanJavadoc,cleanLib"
+            description="Deletes all class files, build, dist, lib, and zip files"/>
 
-    <copy todir="${dist-mac}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.grammar **/*.soloist" />
-    </copy>
+    <target name="dist-mac" depends="dist">
+        <property name="appdir"
+                  value="${dist-mac}/${appName}.app"/>
+        <mkdir dir="${appdir}"/>
+        <mkdir dir="${appdir}/Contents"/>
+        <mkdir dir="${appdir}/Contents/MacOS"/>
+        <mkdir dir="${appdir}/Contents/Resources"/>
+        <mkdir dir="${appdir}/Contents/Resources/Java"/>
+        <mkdir dir="${dist-mac}/vocab"/>
+        <mkdir dir="${dist-mac}/styles"/>
+        <mkdir dir="${dist-mac}/styleExtract"/>
+        <mkdir dir="${dist-mac}/midi"/>
+        <mkdir dir="${dist-mac}/leadsheets"/>
 
-    <copy todir="${dist-mac}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.prefs" />
-    </copy>
-    
-    <copy todir="${dist-mac}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.xml" />
-    </copy>
-    
-    <copy todir="${dist-mac}/leadsheets">
-        <fileset dir="${lsDir}" includes="**/*.ls" />
-    </copy>
-    
-    <copy todir="${dist-mac}/styles">
-        <fileset dir="${styleDir}" includes="**/*.sty" />
-    </copy>
-    
-    <copy todir="${dist-mac}/styleExtract">
-        <fileset dir="${styleExtractDir}" includes="**/*.ls **/*.mid **/*.MID" />
-    </copy>
-    
-     <copy todir="${dist-mac}/midi">
-        <fileset dir="${midiDir}" includes="**/*.mid **/*.MID" />
-    </copy>
-    
-    <copy todir="${dist-mac}">
-        <fileset dir="${miscDir}" includes="**/*.*" />
-    </copy>
-   
-    
-</target>
+        <copy file="${packagingDir}/JavaApplicationStub"
+              todir="${appdir}/Contents/MacOS"/>
+        <exec executable="chmod">
+            <arg line="755 ${appdir}/Contents/MacOS/JavaApplicationStub"/>
+        </exec>
 
-<target name="dist-win" depends="dist">
-    
-    <property name="winDir"
-        value="${packagingDir}/build-exe" />
-        
-    <mkdir dir="${dist-win}/vocab" />
-    <mkdir dir="${dist-win}/leadsheets" />
-    
-    <exec executable="ant">
-        <arg line="-f ${winDir}/launch4j/build.xml" />
-    </exec>
-   
-    <exec executable="java">
-        <arg line="-jar ${winDir}/launch4j/launch4j.jar ${winDir}/launch4j-config.xml"/>
-    </exec>
-    
-    <copy todir="${dist-win}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.voc" />  
-    </copy>
+        <copy file="${packagingDir}/ImproVisor.icns"
+              todir="${appdir}/Contents/Resources"/>
 
-    <move todir="${dist-win}" file="${winDir}/Impro-Visor.exe" />
+        <copy file="${packagingDir}/Info.plist"
+              todir="${dist-mac}/${appName}.app/Contents"/>
 
-    <copy todir="${dist-win}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*" />
-    </copy>
-    
-    <copy todir="${dist-win}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.grammar" />
-    </copy>
-    
-    <copy todir="${dist-win}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.prefs" />
-    </copy>
-    <copy todir="${dist-win}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.cluster" />
-    </copy>
-    <copy todir="${dist-win}/vocab">
-        <fileset dir="${vocabDir}" includes="**/*.rhythms" />
-    </copy>
-    
-    <copy todir="${dist-win}/leadsheets">
-        <fileset dir="${lsDir}" includes="**/*.ls" />
-    </copy>
-    
-    <copy todir="${dist-win}">
-        <fileset dir="${miscDir}" includes="**/*.*" />
-    </copy>
-    
-    <move todir="${dist-win}" file="${winDir}/Impro-Visor.exe" />
-</target>
+        <copy file="${packagingDir}/PkgInfo"
+              todir="${dist-mac}/${appName}.app/Contents"/>
 
-<target name="package-for-store" depends="dist">
- 
-    <!-- Change the value of this property to be the name of your JAR,
+        <copy file="${distDir}/improvisor.jar"
+              todir="${appdir}/Contents/Resources/Java"/>
+
+        <copy todir="${dist-mac}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.voc HeadData.data"/>
+        </copy>
+
+        <copy todir="${dist-mac}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*"/>
+        </copy>
+
+        <copy todir="${dist-mac}">
+            <fileset dir="" includes="LICENSE.txt README.txt"/>
+        </copy>
+
+        <copy todir="${dist-mac}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.grammar **/*.soloist"/>
+        </copy>
+
+        <copy todir="${dist-mac}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.prefs"/>
+        </copy>
+
+        <copy todir="${dist-mac}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.xml"/>
+        </copy>
+
+        <copy todir="${dist-mac}/leadsheets">
+            <fileset dir="${lsDir}" includes="**/*.ls"/>
+        </copy>
+
+        <copy todir="${dist-mac}/styles">
+            <fileset dir="${styleDir}" includes="**/*.sty"/>
+        </copy>
+
+        <copy todir="${dist-mac}/styleExtract">
+            <fileset dir="${styleExtractDir}" includes="**/*.ls **/*.mid **/*.MID"/>
+        </copy>
+
+        <copy todir="${dist-mac}/midi">
+            <fileset dir="${midiDir}" includes="**/*.mid **/*.MID"/>
+        </copy>
+
+        <copy todir="${dist-mac}">
+            <fileset dir="${miscDir}" includes="**/*.*"/>
+        </copy>
+
+
+    </target>
+
+    <target name="dist-win" depends="dist">
+
+        <property name="winDir"
+                  value="${packagingDir}/build-exe"/>
+
+        <mkdir dir="${dist-win}/vocab"/>
+        <mkdir dir="${dist-win}/leadsheets"/>
+
+        <exec executable="ant">
+            <arg line="-f ${winDir}/launch4j/build.xml"/>
+        </exec>
+
+        <exec executable="java">
+            <arg line="-jar ${winDir}/launch4j/launch4j.jar ${winDir}/launch4j-config.xml"/>
+        </exec>
+
+        <copy todir="${dist-win}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.voc"/>
+        </copy>
+
+        <move todir="${dist-win}" file="${winDir}/Impro-Visor.exe"/>
+
+        <copy todir="${dist-win}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*"/>
+        </copy>
+
+        <copy todir="${dist-win}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.grammar"/>
+        </copy>
+
+        <copy todir="${dist-win}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.prefs"/>
+        </copy>
+        <copy todir="${dist-win}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.cluster"/>
+        </copy>
+        <copy todir="${dist-win}/vocab">
+            <fileset dir="${vocabDir}" includes="**/*.rhythms"/>
+        </copy>
+
+        <copy todir="${dist-win}/leadsheets">
+            <fileset dir="${lsDir}" includes="**/*.ls"/>
+        </copy>
+
+        <copy todir="${dist-win}">
+            <fileset dir="${miscDir}" includes="**/*.*"/>
+        </copy>
+
+        <move todir="${dist-win}" file="${winDir}/Impro-Visor.exe"/>
+    </target>
+
+    <property name="application.title" value="Impro-Visor"/>
+    <property name="main.class" value="imp.ImproVisor"/>
+    <target name="package-for-store" depends="dist">
+
+        <!-- Change the value of this property to be the name of your JAR,
          minus the .jar extension. It should not have spaces.
          <property name="store.jar.name" value="MyJarName"/>
     -->
-    <property name="store.jar.name" value="Impro-Visor"/>
- 
- 
-    <!-- don't edit below this line -->
- 
-    <property name="store.dir" value="store"/>
-    <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
- 
-    <echo message="Packaging ${application.title} into a single JAR at ${store.jar}"/>
- 
-    <delete dir="${store.dir}"/>
-    <mkdir dir="${store.dir}"/>
- 
-    <jar destfile="${store.dir}/temp_final.jar" filesetmanifest="skip">
-        <zipgroupfileset dir="${distDir}" includes="*.jar"/>
- 
-        <manifest>
-            <attribute name="Main-Class" value="${main.class}"/>
-        </manifest>
-    </jar>
- 
-    <zip destfile="${store.jar}">
-        <zipfileset src="${store.dir}/temp_final.jar"
-        excludes="META-INF/*.SF, META-INF/*.DSA, META-INF/*.RSA"/>
-    </zip>
- 
-    <delete file="${store.dir}/temp_final.jar"/>
-</target>
+        <property name="store.jar.name" value="Impro-Visor"/>
 
- 
+
+        <!-- don't edit below this line -->
+
+        <property name="store.dir" value="store"/>
+        <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
+
+        <echo message="Packaging ${application.title} into a single JAR at ${store.jar}"/>
+
+        <delete dir="${store.dir}"/>
+        <mkdir dir="${store.dir}"/>
+
+        <jar destfile="${store.dir}/temp_final.jar" filesetmanifest="skip">
+            <zipgroupfileset dir="${distDir}" includes="*.jar"/>
+
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+            </manifest>
+        </jar>
+
+        <zip destfile="${store.jar}">
+            <zipfileset src="${store.dir}/temp_final.jar"
+                        excludes="META-INF/*.SF, META-INF/*.DSA, META-INF/*.RSA"/>
+        </zip>
+
+        <delete file="${store.dir}/temp_final.jar"/>
+    </target>
+
+
 </project>

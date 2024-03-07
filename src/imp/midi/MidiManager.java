@@ -539,7 +539,6 @@ public void setOutDevice(Object outInfoObject)
             // get control of the output device
             this.out = MidiSystem.getMidiDevice(outInfo);
             out.open();
-
             // open a receiver on the output device for this program
             try
               {

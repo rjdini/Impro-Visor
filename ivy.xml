@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 
 
-<ivy-module version="2.0">
+<ivy-module version="2.5.2">
 	<info organisation="org.apache" module="testProject" branch="" revision="1.0" />
 	<configurations>
             <conf name="build" description="build configuration"/>

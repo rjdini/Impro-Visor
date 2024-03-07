@@ -48,6 +48,8 @@ import imp.Constants.ExtractMode;
 import imp.Constants.StaveType;
 import imp.ImproVisor;
 import static imp.ImproVisor.getStyleDirectory;
+import static java.lang.Integer.valueOf;
+
 import imp.RecentFiles;
 import imp.audio.SCHandler;
 import imp.roadmap.brickdictionary.Block;
@@ -12864,9 +12866,9 @@ public void addARow()
   {
     sectionTableModel.insertRow(0, new Object[]
       {
-        new Integer(0),
-        new Integer(0),
-        new Integer(0),
+              Integer.valueOf(0),
+              Integer.valueOf(0),
+              Integer.valueOf(0),
         "",
         new JCheckBox()
       });
@@ -13141,7 +13143,7 @@ private void updateLoopFromTextField()
   {
     try
       {
-        int value = Integer.valueOf(loopSet.getText());
+        int value = valueOf(loopSet.getText());
 
         setLoopCount(value);
       }
@@ -15122,7 +15124,7 @@ public static int intFromTextField(javax.swing.JTextField field, int low, int hi
  */
 static double doubleFromString(String string) throws NumberFormatException
   {
-    return new Double(string).doubleValue();
+    return Double.parseDouble(string);
   }
 
 /**
@@ -15849,7 +15851,7 @@ private void ensureChordFontSize()
         chordFontSize = "" + DEFAULT_CHORD_FONT_SIZE_VALUE;
       }
 
-    int chordFontSizeValue = Integer.valueOf(chordFontSize);
+    int chordFontSizeValue = valueOf(chordFontSize);
 
     Preferences.setPreference(Preferences.DEFAULT_CHORD_FONT_SIZE, "" + chordFontSizeValue);
 
@@ -15905,17 +15907,17 @@ private void setPrefsDialog()
       }
 
 
-    defMasterVolSlider.setValue(Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_MIXER_ALL)));
+    defMasterVolSlider.setValue(valueOf(Preferences.getPreference(Preferences.DEFAULT_MIXER_ALL)));
 
-    defEntryVolSlider.setValue(Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_MIXER_ENTRY)));
+    defEntryVolSlider.setValue(valueOf(Preferences.getPreference(Preferences.DEFAULT_MIXER_ENTRY)));
 
-    defBassVolSlider.setValue(Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_MIXER_BASS)));
+    defBassVolSlider.setValue(valueOf(Preferences.getPreference(Preferences.DEFAULT_MIXER_BASS)));
 
-    defDrumVolSlider.setValue(Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_MIXER_DRUMS)));
+    defDrumVolSlider.setValue(valueOf(Preferences.getPreference(Preferences.DEFAULT_MIXER_DRUMS)));
 
-    defChordVolSlider.setValue(Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_MIXER_CHORDS)));
+    defChordVolSlider.setValue(valueOf(Preferences.getPreference(Preferences.DEFAULT_MIXER_CHORDS)));
 
-    defMelodyVolSlider.setValue(Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_MIXER_MELODY)));
+    defMelodyVolSlider.setValue(valueOf(Preferences.getPreference(Preferences.DEFAULT_MIXER_MELODY)));
 
 
     // ===== set stave buttons
@@ -15923,7 +15925,7 @@ private void setPrefsDialog()
     alwaysUseStave.setSelected(Preferences.getAlwaysUseStave());
 
     int stave =
-            Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_LOAD_STAVE));
+            valueOf(Preferences.getPreference(Preferences.DEFAULT_LOAD_STAVE));
 
     autoStave.setSelected(stave == StaveType.AUTO.ordinal());
 
@@ -17114,7 +17116,7 @@ public void setAdviceUsed()
 
                 TreeNode parent = node.getParent();
 
-                Enumeration<TreeNode> e = parent.children();
+                Enumeration<TreeNode> e = (Enumeration<TreeNode>) parent.children();
 
                 TreeNode prev = null;
 
@@ -20229,7 +20231,7 @@ public void newNotate()
 
     ensureChordFontSize();
 
-    int chordFontSize = Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_CHORD_FONT_SIZE));
+    int chordFontSize = valueOf(Preferences.getPreference(Preferences.DEFAULT_CHORD_FONT_SIZE));
 
     newScore.setChordFontSize(chordFontSize);
 

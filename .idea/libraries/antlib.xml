@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="antlib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.ant/lib/commons-configuration2-2.9.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.ant/lib/edn-java-0.7.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.ant/lib/ivy-2.5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.ant/lib/mathz-0.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.ant/lib/mikera-1.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.ant/lib/org-apache-commons-lang3-RELEASE130.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
